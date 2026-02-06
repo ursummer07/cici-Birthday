@@ -1,0 +1,169 @@
+/* Import Font */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap');
+
+body {
+    
+    /* Ensure folder 'pic' exists */
+    background-image: url("pic/quiz.jpg");
+    
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* --- WRAPPER --- */
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+/* --- CIRCLE GIF CONTAINER --- */
+.gif-container {
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.2); 
+    border-radius: 50%;
+    border: 4px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+}
+
+.top-gif {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- TITLE --- */
+.header-title {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    font-weight: 900;
+}
+
+/* --- QUIZ AREA --- */
+.quiz-area {
+    width: 90%;
+}
+
+.slide {
+    display: none;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.slide.active {
+    display: block;
+}
+
+/* --- PINK BOX --- */
+.pink-box {
+    background: linear-gradient(180deg, #ff99d6 0%, #ff7eb9 100%);
+    border: 3px solid white;
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.4);
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.question-text, .reply-text {
+    color: white;
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.5;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.reply-text {
+    display: none;
+    font-size: 21px;
+    animation: fadeIn 0.5s ease;
+}
+
+/* --- BUTTONS --- */
+.btn-group {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn-group button {
+    background: white;
+    color: #ff7eb9;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: 900;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+
+.btn-group button:hover {
+    transform: scale(1.1);
+    background: #fff0f5;
+}
+
+/* --- QUIZ NAV BUTTONS (Tap Me/Next Question) --- */
+.nav-button-wrapper {
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease;
+}
+
+.dark-btn {
+    background-color: #3b4a5a;
+    color: white;
+    border: 2px solid white;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    font-family: 'Nunito', sans-serif;
+    transition: transform 0.2s;
+}
+
+.dark-btn:hover {
+    transform: scale(1.05);
+    background-color: #4b5a6a;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Quiz ✨</title>
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+
+    <div class="main-wrapper">
+        
+        <div class="gif-container">
+            <img 
+                class="top-gif" 
+                id="quiz-gif" 
+                src="" 
+                alt="Cute GIF">
+        </div>
+
+        <h1 class="header-title"> Quiz ✨</h1>
+
+        <div class="quiz-area">
+            
+            <div class="slide active" id="slide-1">
+                <div class="pink-box">
+                    <div class="content-wrapper" id="content-1">
+                        <p class="question-text">Do you know why today is the most important day in my calendar🗓️?</p>
+                        <div class="btn-group" id="btn-group-1">
+                            <button onclick="showResponse(1, 'yes')">Yes 📅</button>
+                            <button onclick="showResponse(1, 'no')">No 🤔</button>
+                        </div>
+                        <p class="reply-text" id="reply-text-1"></p>
+                    </div>
+                </div>
+                <div class="nav-button-wrapper" id="nav-1" style="display: none;">
+                    <button class="dark-btn" onclick="nextQuestion(1)">Next Question ➜</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-2">
+                <div class="pink-box">
+                    <div class="content-wrapper" id="content-2">
+                        <p class="question-text">Do you know why the universe🌌 chose this specific month for you?</p>
+                        <div class="btn-group" id="btn-group-2">
+                            <button onclick="showResponse(2, 'yes')">Yes ✨</button>
+                            <button onclick="showResponse(2, 'no')">No 🌙</button>
+                        </div>
+                        <p class="reply-text" id="reply-text-2"></p>
+                    </div>
+                </div>
+                <div class="nav-button-wrapper" id="nav-2" style="display: none;">
+                    <button class="dark-btn" onclick="nextQuestion(2)">Next Question ➜</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-3">
+                <div class="pink-box">
+                    <div class="content-wrapper" id="content-3">
+                        <p class="question-text">Do you know what the best present in the world🌍 is?</p>
+                        <div class="btn-group" id="btn-group-3">
+                            <button onclick="showResponse(3, 'yes')">Yes 🎁</button>
+                            <button onclick="showResponse(3, 'no')">No 🤷‍♀️</button>
+                        </div>
+                        <p class="reply-text" id="reply-text-3"></p>
+                    </div>
+                </div>
+                <div class="nav-button-wrapper" id="nav-3" style="display: none;">
+                    <button class="dark-btn" onclick="nextQuestion(3)">Next Question ➜</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-4">
+                <div class="pink-box">
+                    <div class="content-wrapper" id="content-4">
+                        <p class="question-text">Do you feel a little extra sparkle✨💫 today?</p>
+                        <div class="btn-group" id="btn-group-4">
+                            <button onclick="showResponse(4, 'yes')">Yes ✨</button>
+                            <button onclick="showResponse(4, 'no')">No 😳</button>
+                        </div>
+                        <p class="reply-text" id="reply-text-4"></p>
+                    </div>
+                </div>
+                <div class="nav-button-wrapper" id="nav-4" style="display: none;">
+                    <button class="dark-btn" onclick="nextQuestion(4)">One More... ➜</button>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-5">
+                <div class="pink-box">
+                    <div class="content-wrapper" id="content-5">
+                        <p class="question-text">Are you ready to receive your birthday gift🎁?</p>
+                        <div class="btn-group" id="btn-group-5">
+                            <button onclick="showResponse(5, 'yes')">Yes! 😍</button>
+                            <button onclick="showResponse(5, 'no')">Not yet 🙈</button>
+                        </div>
+                        <p class="reply-text" id="reply-text-5"></p>
+                    </div>
+                </div>
+                
+                </audio>
+                <div onclick="playMusic()" class="nav-button-wrapper" id="nav-5" style="display: none;">
+                    <a href="html2.html" class="dark-btn" style="text-decoration:none;">Open Gift 🎁</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // --- 1. ANSWERS CONFIGURATION ---
+        const answers = {
+            1: { 
+                yes: "Exactly! Because the world became a better place today. 🌍❤️", 
+                no: "Because today is the day my favorite person (you!) was born. 🥳💖" 
+            },
+            2: { 
+                yes: "Because it needed a month to celebrate pure magic. ✨🧙‍♀️", 
+                no: "To bring the brightest star down to Earth. Happy Birthday, Cutie! 🌟🎂" 
+            },
+            3: { 
+                yes: "If you thought 'Me', then you are absolutely right! ;) 😜❤️", 
+                no: "Look in the mirror. It's you. You are the gift. 🪞💝" 
+            },
+            4: { 
+                yes: "That's the birthday glow! It suits you. ✨💅", 
+                no: "I see it! You're more radiant than ever. ☀️😍" 
+            },
+            5: { 
+                yes: "Close your eyes and make a wish first... Okay, open them! 🕯️💭", 
+                no: "Too bad! I have so much love to give, you can't refuse it! 😤💕" 
+            }
+        };
+
+        <!-- replace your gifMap with this -->
+        const gifMap = {
+            1: "./gif/q1.gif",
+            2: "./gif/q2.gif",
+            3: "./gif/q3.gif",
+            4: "./gif/q4.gif",
+            5: "./gif/q5.gif"
+        };
+
+        // set initial GIF when the page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            const imgElement = document.getElementById("quiz-gif");
+            if (gifMap[1]) imgElement.src = gifMap[1];
+        });
+
+        function showResponse(qNum, choice) {
+            // Hide Question and Buttons
+            document.querySelector(`#slide-${qNum} .question-text`).style.display = 'none';
+            document.querySelector(`#btn-group-${qNum}`).style.display = 'none';
+            
+            // Show Answer Text
+            const reply = document.getElementById(`reply-text-${qNum}`);
+            reply.innerHTML = answers[qNum][choice];
+            reply.style.display = 'block';
+
+            // Show Navigation Button (Next Question)
+            const navBtn = document.getElementById(`nav-${qNum}`);
+            navBtn.style.display = 'flex'; 
+            setTimeout(() => { navBtn.style.opacity = '1'; navBtn.style.transform = 'translateY(0)'; }, 50);
+
+            // --- SPECIAL LOGIC FOR LAST QUESTION (5) ---
+            if (qNum === 5) {
+                // Show the footer buttons (Back/Next)
+                const footerBtns = document.getElementById('final-buttons');
+                footerBtns.style.display = 'flex';
+                // Optional: Add a small fade-in
+                setTimeout(() => { footerBtns.style.opacity = '1'; }, 100);
+            }
+        }
+
+        function nextQuestion(current) {
+            document.getElementById(`slide-${current}`).classList.remove('active');
+            
+            const next = current + 1;
+            const nextSlide = document.getElementById(`slide-${next}`);
+            
+            if(nextSlide) {
+                nextSlide.classList.add('active');
+                
+                const imgElement = document.getElementById("quiz-gif");
+                if(gifMap[next] && gifMap[next] !== "") {
+                    imgElement.src = gifMap[next];
+                }
+            }
+        }
+    </script>
+    <style>
+    .floating-emoji {
+        position: fixed;
+        bottom: -50px; /* Start below the screen */
+        pointer-events: none; /* Allows you to click through them */
+        z-index: -1; /* Keeps them behind your text */
+        animation: floatUp linear forwards;
+    }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-110vh) rotate(360deg); /* Float to top */
+            opacity: 0;
+        }
+    }
+</style>
+
+<script>
+    function startFloatingEmojis() {
+        const emojis = ['💕', '💖', '🥰', '😘', '🎀', '❣️', '🌺', '🎈', '✨', '💗', '💥', '💫'];
+        
+        setInterval(() => {
+            const emoji = document.createElement('div');
+            emoji.classList.add('floating-emoji');
+            
+            // 1. Pick a random emoji
+            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            // 2. Randomize Position (Left 0% to 100%)
+            emoji.style.left = Math.random() * 100 + 'vw';
+            
+            // 3. Randomize Animation Duration (Speed: 3s to 8s)
+            const duration = Math.random() * 5 + 3; 
+            emoji.style.animationDuration = duration + 's';
+            
+            // 4. Randomize Size (15px to 35px)
+            const size = Math.random() * 20 + 15; 
+            emoji.style.fontSize = size + 'px';
+            
+            document.body.appendChild(emoji);
+
+            // 5. Remove element after animation finishes to prevent lag
+            setTimeout(() => {
+                emoji.remove();
+            }, duration * 1000); // Convert seconds to milliseconds
+
+        }, 300); // Create a new emoji every 300ms (Adjust this for more/less emojis)
+    }
+
+    // Start the effect
+    startFloatingEmojis();
+    function playMusic() {
+    var audio = document.getElementById("birthdayAudio");
+    
+    // This plays the audio and catches errors if the file isn't found
+    audio.play().then(() => {
+        console.log("Audio playing...");
+    }).catch(error => {
+        console.log("Audio failed to play. Check file path or name.", error);
+    });
+}
+</script>
+</body>
+</html>

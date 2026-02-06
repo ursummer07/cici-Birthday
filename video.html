@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday Cici</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS START --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: linear-gradient(45deg, #ffb7c5, #ff9a9e);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* 1. WHITE OVERLAY (START SCREEN) */
+        #white-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        #startBtn {
+            padding: 15px 40px;
+            font-size: 1.8rem;
+            background: #ff3366;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Dancing Script', cursive;
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+            animation: pulse 1.5s infinite;
+        }
+
+        /* 2. MAIN CONTENT (VIDEO AREA) */
+        #main-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: filter 0.8s ease;
+        }
+
+        /* VIDEO STYLE (9:16 VERTICAL FIX) */
+        video {
+            aspect-ratio: 9 / 16; /* Mobile Vertical Ratio */
+            height: 85vh;        /* Height priority */
+            width: auto;         /* Auto width */
+            max-width: 90vw;     /* Prevent overflow on small screens */
+            object-fit: cover;   /* Fill the frame */
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(255, 105, 180, 0.6);
+            z-index: 10;
+        }
+
+        /* 3. END OVERLAY (NEXT BUTTONS) */
+        #end-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            display: none; /* Hidden initially */
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .blur-effect {
+            filter: blur(10px);
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            background: white;
+            color: #ff3366;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Dancing Script', cursive;
+            transition: transform 0.2s;
+        }
+        .btn:hover { transform: scale(1.1); }
+
+        /* ANIMATIONS */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Confetti Layer */
+        #background-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .confetti { position: absolute; top: -10vh; opacity: 0.8; animation: fall linear infinite; }
+        @keyframes fall { 100% { transform: translateY(110vh) rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div id="white-overlay">
+        <button id="startBtn">Click for Surprise! 🎁</button>
+    </div>
+
+    <div id="main-content">
+        <div id="background-layer"></div> <video id="myVideo" playsinline>
+            <source src="birthday_video.mp4" type="video/mp4">
+            Your browser does not support video.
+        </video>
+    </div>
+
+    <div id="end-overlay">
+        <button class="btn" onclick="location.href='html3.html'">← Back</button>
+        <button class="btn" onclick="location.href='feedback.html'">Next →</button>
+    </div>
+
+    <script>
+        // Elements Setup
+        const startBtn = document.getElementById('startBtn');
+        const whiteOverlay = document.getElementById('white-overlay');
+        const video = document.getElementById('myVideo');
+        const mainContent = document.getElementById('main-content');
+        const endOverlay = document.getElementById('end-overlay');
+
+        // Audio Setup (Loading 'song.mp3')
+     // Loop the song
+
+        // --- STEP 1: START BUTTON CLICK ---
+        startBtn.addEventListener('click', function() {
+            
+            
+          
+            // 2. Play Video
+            video.play();
+            
+            // 3. Remove White Screen
+            whiteOverlay.style.opacity = '0';
+            setTimeout(() => {
+                whiteOverlay.style.display = 'none';
+            }, 500);
+
+            // 4. Start Confetti
+            startConfetti();
+        });
+
+        // --- STEP 2: VIDEO ENDS ---
+        video.onended = function() {
+            // Blur the background
+            mainContent.classList.add('blur-effect');
+            // Show next buttons
+            endOverlay.style.display = 'flex';
+        };
+
+        // --- CONFETTI FUNCTION ---
+        function startConfetti() {
+            const container = document.getElementById('background-layer');
+            const colors = ['#ffc0cb', '#ff69b4', '#ffd700', '#87ceeb'];
+            const emojis = ['🎈', '💖', '✨', '🌸'];
+
+            for (let i = 0; i < 30; i++) {
+                const div = document.createElement('div');
+                div.classList.add('confetti');
+                
+                if (Math.random() > 0.5) {
+                    div.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                    div.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                } else {
+                    div.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    div.style.width = '10px'; div.style.height = '10px';
+                }
+                
+                div.style.left = Math.random() * 100 + 'vw';
+                div.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                div.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(div);
+            }
+        }
+    </script>
+</body>
+</html>

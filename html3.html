@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Memory Lane❣️</title>
+    <link rel="stylesheet" href="memory_style.css">
+
+   
+</head>
+<body>
+
+
+
+    <div class="scroll-container">
+        <h1 class="main-title">Your's💖Moments ✨</h1>
+        <p class="subtitle" style="text-align: center;" style="text-shadow:1px">   💫Scroll to see the memories!!..💕 and tap💌to see pic📷</p>
+
+        <div class="memory-wrapper left" onclick="toggleZoom(this)">
+            <div class="img-box">
+                <img src="./pic/pic2.jpg" alt="Memory 1">
+            </div>
+            <p class="note-text">"That Smile😀 is Sweeter then extra Sirub on a hot Gulab Jamun! ❤️"</p>
+        </div>
+
+        <div class="memory-wrapper right" onclick="toggleZoom(this)">
+            <div class="img-box">
+                <img src="./pic/pic1.jpg" alt="Memory 2">
+            </div>
+            <p class="note-text">"Waah!! even your random candid photos📸 look like blockbuster movie poster🎬"</p>
+        </div>
+
+        <div class="memory-wrapper left" onclick="toggleZoom(this)">
+            <div class="img-box">
+                <img src="./pic/pic4.jpg" alt="Memory 3">
+            </div>
+            <p class="note-text">"Double thumbs up for being the most adorable human ever! 👍👍"</p>
+        </div>
+
+        <div class="memory-wrapper right" onclick="toggleZoom(this)">
+            <div class="img-box">
+                <img src="./pic/0013.jpeg" alt="Memory 4">
+            </div>
+            <p class="note-text">"Pura Bollywood Heroine💖 Vibe!! the Cameraman should wait outside for you📷"</p>
+        </div>
+
+        <div class="memory-wrapper center-last" onclick="toggleZoom(this)">
+            <div class="img-box">
+                <img src="./pic/0011.jpeg" alt="Memory 5">
+            </div>
+            <p class="note-text">"Those Jhumkas and that sweet smile😄 Stole my Heart💖 You are looking Absolutely Adorable🥰"</p>
+        </div>
+
+        <div class="footer-buttons">
+            <a href="html2.html" class="nav-btn back-btn">← Back</a>
+            <a href="video.html" class="nav-btn next-btn">Next →</a>
+        </div>
+
+        <div id="overlay" onclick="closeAll()"></div>
+
+    </div>
+
+    <script>
+        // --- 1. SCROLL TRIGGER ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                } else {
+                    entry.target.classList.remove('show');
+                }
+            });
+        });
+
+        const hiddenElements = document.querySelectorAll('.memory-wrapper');
+        hiddenElements.forEach((el) => observer.observe(el));
+
+
+        // --- 2. ZOOM CLICK LOGIC ---
+        function toggleZoom(element) {
+            const isActive = element.classList.contains('active');
+            closeAll();
+            
+            if (!isActive) {
+                element.classList.add('active');
+                document.getElementById('overlay').classList.add('show');
+            }
+        }
+
+        function closeAll() {
+            const allItems = document.querySelectorAll('.memory-wrapper');
+            allItems.forEach(item => item.classList.remove('active'));
+            document.getElementById('overlay').classList.remove('show');
+        }
+    </script>
+    <style>
+    .floating-emoji {
+        position: fixed;
+        bottom: -50px; /* Start below the screen */
+        pointer-events: none; /* Allows you to click through them */
+        z-index: -1; /* Keeps them behind your text */
+        animation: floatUp linear forwards;
+    }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-110vh) rotate(360deg); /* Float to top */
+            opacity: 0;
+        }
+    }
+</style>
+
+<script>
+    function startFloatingEmojis() {
+        const emojis = ['💕', '💖', '🥰', '😘', '🎀', '❣️', '🌺', '🎈', '✨', '💗', '💥', '💫'];
+        
+        setInterval(() => {
+            const emoji = document.createElement('div');
+            emoji.classList.add('floating-emoji');
+            
+            // 1. Pick a random emoji
+            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            // 2. Randomize Position (Left 0% to 100%)
+            emoji.style.left = Math.random() * 100 + 'vw';
+            
+            // 3. Randomize Animation Duration (Speed: 3s to 8s)
+            const duration = Math.random() * 5 + 3; 
+            emoji.style.animationDuration = duration + 's';
+            
+            // 4. Randomize Size (15px to 35px)
+            const size = Math.random() * 20 + 15; 
+            emoji.style.fontSize = size + 'px';
+            
+            document.body.appendChild(emoji);
+
+            // 5. Remove element after animation finishes to prevent lag
+            setTimeout(() => {
+                emoji.remove();
+            }, duration * 1000); // Convert seconds to milliseconds
+
+        }, 300); // Create a new emoji every 300ms (Adjust this for more/less emojis)
+    }
+
+    // Start the effect
+    startFloatingEmojis();
+</script>
+</body>
+</html>

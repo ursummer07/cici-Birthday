@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Thoughts? 💌</title>
+    
+    <link rel="stylesheet" href="feed.css">
+</head>
+<body>
+
+    <div class="bubbles">
+        <span style="--i:11;"></span>
+        <span style="--i:12;"></span>
+        <span style="--i:24;"></span>
+        <span style="--i:10;"></span>
+        <span style="--i:14;"></span>
+        <span style="--i:23;"></span>
+        <span style="--i:18;"></span>
+        <span style="--i:16;"></span>
+        <span style="--i:19;"></span>
+        <span style="--i:20;"></span>
+        <span style="--i:22;"></span>
+        <span style="--i:25;"></span>
+        <span style="--i:18;"></span>
+        <span style="--i:21;"></span>
+        <span style="--i:15;"></span>
+    </div>
+
+    <div class="feedback-card">
+        <div class="card-content">
+            <h2>Did you like the surprise💫..? I have really worked hard💻 for this one!.. for you 🥰</h2>
+            <p>Pick a reaction:</p>
+            
+            <div class="emoji-container">
+                <div class="emoji-btn" onclick="selectEmoji('😭')">😭</div>
+                <div class="emoji-btn" onclick="selectEmoji('😐')">😐</div>
+                <div class="emoji-btn" onclick="selectEmoji('😊')">😊</div>
+                <div class="emoji-btn" onclick="selectEmoji('😍')">😍</div>
+            </div>
+
+            <textarea id="msgInput" placeholder="Write something sweet here... (optional)"></textarea>
+            
+            <button class="send-btn" onclick="sendToWhatsApp()">
+                Send Reply 💘
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Logic to handle the message
+        let selectedEmoji = "";
+
+        function selectEmoji(emoji) {
+            selectedEmoji = emoji;
+            const input = document.getElementById("msgInput");
+            
+            // Auto-fill the text area based on emoji (User can edit it)
+            if(emoji === '😍') input.value = "I loved it! It was so beautiful! 😍";
+            else if(emoji === '😊') input.value = "It made me smile! 😊";
+            else if(emoji === '😭') input.value = "I'm crying, this is so sweet! 😭";
+            else if(emoji === '😐') input.value = "It was okay. 😐";
+            
+            // Add a visual 'selected' effect
+            document.querySelectorAll('.emoji-btn').forEach(btn => btn.style.transform = "scale(1)");
+            event.target.style.transform = "scale(1.4)";
+        }
+
+        function sendToWhatsApp() {
+            let msg = document.getElementById("msgInput").value;
+            
+            if(msg.trim() === "") {
+                alert("Please select an emoji or write a message first! 😅");
+                return;
+            }
+
+            // --- IMPORTANT: CHANGE THIS TO YOUR PHONE NUMBER ---
+            // Format: CountryCode + Number (e.g., 919876543210 for India)
+            let phoneNumber = "+91 8822450895"; 
+            
+            let url = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(msg);
+            window.open(url, '_blank');
+        }
+    </script>
+    <style>
+    .floating-emoji {
+        position: fixed;
+        bottom: -50px; /* Start below the screen */
+        pointer-events: none; /* Allows you to click through them */
+        z-index: -1; /* Keeps them behind your text */
+        animation: floatUp linear forwards;
+    }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-110vh) rotate(360deg); /* Float to top */
+            opacity: 0;
+        }
+    }
+</style>
+
+<script>
+    function startFloatingEmojis() {
+        const emojis = ['💕', '💖', '🥰', '😘', '🎀', '❣️', '🌺', '🎈', '✨', '💗', '💥', '💫'];
+        
+        setInterval(() => {
+            const emoji = document.createElement('div');
+            emoji.classList.add('floating-emoji');
+            
+            // 1. Pick a random emoji
+            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            // 2. Randomize Position (Left 0% to 100%)
+            emoji.style.left = Math.random() * 100 + 'vw';
+            
+            // 3. Randomize Animation Duration (Speed: 3s to 8s)
+            const duration = Math.random() * 5 + 3; 
+            emoji.style.animationDuration = duration + 's';
+            
+            // 4. Randomize Size (15px to 35px)
+            const size = Math.random() * 20 + 15; 
+            emoji.style.fontSize = size + 'px';
+            
+            document.body.appendChild(emoji);
+
+            // 5. Remove element after animation finishes to prevent lag
+            setTimeout(() => {
+                emoji.remove();
+            }, duration * 1000); // Convert seconds to milliseconds
+
+        }, 300); // Create a new emoji every 300ms (Adjust this for more/less emojis)
+    }
+
+    // Start the effect
+    startFloatingEmojis();
+</script>
+    
+</body>
+</html>
